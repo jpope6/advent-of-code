@@ -29,7 +29,11 @@ func main() {
 }
 
 func part1(input []string) int {
-	var red, green, blue int = 12, 13, 14
+	var colorMap = map[string]int{
+		"red":   12,
+		"green": 13,
+		"blue":  14,
+	}
 	sum := 0
 
 	for i, s := range input {
@@ -41,34 +45,16 @@ func part1(input []string) int {
 			var colorInfo []string = strings.Split(round, ", ")
 
 			for _, colors := range colorInfo {
-				var info []string = strings.Split(colors, " ")
-				color := info[1]
-				num, err := strconv.Atoi(info[0])
-				if err != nil {
-					fmt.Println("Error converting string to int:", err)
-					fmt.Println(colorInfo)
-					return 0
-				}
+				numStr, color, _ := strings.Cut(colors, " ")
+				num, _ := strconv.Atoi(numStr)
 
-				switch color {
-				case "red":
-					if num > red {
-						valid = false
-						break
-					}
-				case "green":
-					if num > green {
-						valid = false
-						break
-					}
-				case "blue":
-					if num > blue {
-						valid = false
-						break
-					}
+				if num > colorMap[color] {
+					valid = false
+					break
 				}
 			}
 		}
+
 		if valid {
 			sum += i + 1
 		} else {
@@ -80,7 +66,11 @@ func part1(input []string) int {
 }
 
 func part2(input []string) int {
-	red, green, blue := 0, 0, 0
+	colorMap := map[string]int{
+		"red":   0,
+		"green": 0,
+		"blue":  0,
+	}
 	sum := 0
 
 	for i, s := range input {
@@ -91,28 +81,19 @@ func part2(input []string) int {
 			var colorInfo []string = strings.Split(round, ", ")
 
 			for _, colors := range colorInfo {
-				var info []string = strings.Split(colors, " ")
-				color := info[1]
-				num, err := strconv.Atoi(info[0])
-				if err != nil {
-					fmt.Println("Error converting string to int:", err)
-					fmt.Println(colorInfo)
-					return 0
-				}
+				numStr, color, _ := strings.Cut(colors, " ")
+				num, _ := strconv.Atoi(numStr)
 
-				switch color {
-				case "red":
-					red = max(red, num)
-				case "green":
-					green = max(green, num)
-				case "blue":
-					blue = max(blue, num)
-				}
+				colorMap[color] = max(colorMap[color], num)
 			}
 		}
 
-		sum += (red * green * blue)
-		red, green, blue = 0, 0, 0
+		product := 1
+		for color := range colorMap {
+			product *= colorMap[color]
+			colorMap[color] = 0
+		}
+		sum += product
 	}
 
 	return sum
