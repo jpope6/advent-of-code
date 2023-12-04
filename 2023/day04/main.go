@@ -33,16 +33,14 @@ func part1(input []string) int {
 	for i, s := range input {
 		s := strings.TrimPrefix(s, "Card "+fmt.Sprint(i+1)+": ")
 		winningNumsStr, myNumsStr, _ := strings.Cut(s, "|")
-		winningNums := strings.Split(winningNumsStr, " ")
-		myNums := strings.Split(myNumsStr, " ")
+		winningNums := strings.Fields(winningNumsStr)
+		myNums := strings.Fields(myNumsStr)
 
 		score := 0
 
 		for _, num := range winningNums {
-			num = strings.ReplaceAll(num, " ", "")
 			for _, n := range myNums {
-				n = strings.ReplaceAll(n, " ", "")
-				if num != "" && num == n {
+				if num == n {
 					if score == 0 {
 						score = 1
 					} else {
@@ -61,6 +59,7 @@ func part1(input []string) int {
 func part2(input []string) int {
 	countMap := make(map[int]int)
 
+	// Initialize each card to 1
 	for i := 0; i < len(input); i++ {
 		countMap[i]++
 	}
@@ -68,16 +67,14 @@ func part2(input []string) int {
 	for i := 0; i < len(input); i++ {
 		s := strings.TrimPrefix(input[i], "Card "+fmt.Sprint(i+1)+": ")
 		winningNumsStr, myNumsStr, _ := strings.Cut(s, "|")
-		winningNums := strings.Split(winningNumsStr, " ")
-		myNums := strings.Split(myNumsStr, " ")
+		winningNums := strings.Fields(winningNumsStr)
+		myNums := strings.Fields(myNumsStr)
 
 		index := i + 1
 
 		for _, num := range winningNums {
-			num = strings.ReplaceAll(num, " ", "")
 			for _, n := range myNums {
-				n = strings.ReplaceAll(n, " ", "")
-				if num != "" && num == n {
+				if num == n {
 					countMap[index] += countMap[i]
 					index++
 				}
