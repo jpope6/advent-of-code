@@ -19,3 +19,6 @@
 
 # Go workspace file
 go.work
+
+# input files due to AoC code of conduct
+**/input.txt
