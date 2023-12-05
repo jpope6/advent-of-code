@@ -9,10 +9,6 @@ import (
 	"strings"
 )
 
-type Pair struct {
-	source, range_len int
-}
-
 func main() {
 	file, err := os.Open("input.txt")
 	if err != nil {
