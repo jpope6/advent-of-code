@@ -43,18 +43,13 @@ func part1(input []string) int {
 	}
 
 	ans := 0
-
 	for _, line := range lines {
-		val := 0
-		originalLine := line
+		ans += line[len(line)-1]
 
 		for !isAllZeroes(line) {
-			line = findNextRow(line)
-			val += line[len(line)-1]
+			line = findNextRow(line, 0, 1)
+			ans += line[len(line)-1]
 		}
-
-		val += originalLine[len(originalLine)-1]
-		ans += val
 	}
 
 	return ans
@@ -75,36 +70,22 @@ func part2(input []string) int {
 	}
 
 	ans := 0
-
 	for _, line := range lines {
-		val := 0
-		originalLine := line
+		ans += line[0]
 
 		for !isAllZeroes(line) {
-			line = findNextRow2(line)
-			val += line[0]
+			line = findNextRow(line, 1, 0)
+			ans += line[0]
 		}
-
-		val += originalLine[0]
-		ans += val
 	}
 
 	return ans
 }
 
-func findNextRow(line []int) []int {
+func findNextRow(line []int, offset1, offset2 int) []int {
 	curr := make([]int, len(line)-1)
 	for i := 1; i < len(line); i++ {
-		curr[i-1] = line[i] - line[i-1]
-	}
-
-	return curr
-}
-
-func findNextRow2(line []int) []int {
-	curr := make([]int, len(line)-1)
-	for i := 1; i < len(line); i++ {
-		curr[i-1] = line[i-1] - line[i]
+		curr[i-1] = line[i-offset1] - line[i-offset2]
 	}
 
 	return curr
