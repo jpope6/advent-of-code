@@ -15,4 +15,12 @@ function util.read_lines(filename)
     return lines
 end
 
+function util.run_function_with_timer(func, ...)
+    local startTime = os.clock()
+    local result = func(...)
+    local endTime = os.clock()
+    local elapsedTime = endTime - startTime
+    return result, elapsedTime
+end
+
 return util
