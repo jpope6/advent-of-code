@@ -18,7 +18,7 @@ local function part2(lines)
 
     local index = 1
     local sum = 0
-    local mul_enabled = true -- Start with `mul` enabled
+    local mul_enabled = true
 
     while index <= #line do
         local start_mul, end_mul, num1, num2 = string.find(line, mul_pattern, index)
